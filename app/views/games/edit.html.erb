@@ -1,0 +1,31 @@
+<% provide(:title, "Game-Edit") %>
+
+<h2> Edit Game </h2>
+
+<%= form_for(@game) do |f| %>
+ 	<table class="table">
+ 		<tr>
+    		<td>Game Name</td><td><%= f.label :name, @game.name%></td>
+		</tr>
+		<tr>
+    		<td>Game Map</td><td><%= f.file_field :map%><% unless @game.map.nil?%><%=  image_tag("/images/uploads/" + @game.map, size: "200x200", alt: "Game Map")%><% end %></td>
+		</tr>
+		<tr>
+    		<td>Game History</td><td><%= f.text_area :game_history , :size=>"50x10"%></td>
+		</tr>
+		<tr>
+    		<td>Game Password</td><td><%= f.label :game_password, @game.game_password%></td>
+		</tr>
+ 	</table>
+
+ 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+ 	<p>
+   <%= f.submit "Update" %> &nbsp;<%= link_to '<button type="button">Cancel</button>'.html_safe, games_path %>
+	</p>
+
+	
+
+
+<% end %>
+

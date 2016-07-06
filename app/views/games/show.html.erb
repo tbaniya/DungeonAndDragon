@@ -1,0 +1,69 @@
+<% provide(:title, "Game-Show") %>
+<% if dungeon_master?(@game.dungeon_master) %>
+  <ul>
+  	<li style = "list-style:none;"><%= link_to "Edit Game",edit_game_path(@game)%> | <%= link_to "Invite Users",new_game_invitation_path(@game) %>| <%= link_to "Assign Exp Points",experiencepoints_path(@game) %>
+      | <%= link_to "Assign Achievements",achievements_path(@game) %></li>
+  </ul>
+<% end %>
+<h2> Game Details: </h2>
+<table class = "table">
+  <tr>
+    <td>Game Name</td><td><%= @game.name%></td>
+</tr>
+<tr>
+    <td>Dungeon Master </td><td><%= (dungeon_master?(@game.dungeon_master)) ? ("(me)") : (@game.dungeon_master.user_name)%></td>
+</tr>
+<tr>
+    <td>Game Map</td><td><% unless @game.map.nil?%><%=  image_tag("/images/uploads/" + @game.map, size: "200x200", alt: "Game Map")%><% end %></td>
+</tr>
+<tr>
+    <td>Game History</td><td><%= @game.game_history%></td>
+</tr>
+<tr>
+    <td>Game Password</td><td><%= @game.game_password%></td>
+</tr>
+<tr>
+    <td>Game Players</td>
+    <td><% player_characters = '' 
+      @game.player_characters.each do |player_character|
+
+        if player_characters.length == 0 %>
+        <%=link_to player_character.name, player_character_path(:id=>player_character.id, :dm_id => @game.dungeon_master.id), method: :get %>
+         <!--player_characters = player_character.name -->
+        <% else %>
+        <!-- player_characters = "#{player_characters};#{player_character.name}"-->
+        <%=link_to player_character.name, player_character_path(:id=>player_character.id, :dm_id => @game.dungeon_master.id), method: :getexit %>
+        
+       <% end 
+       end%></td>
+ </tr>
+
+
+
+</table>
+
+
+<% if dungeon_master?(@game.dungeon_master) %>
+	<h2> Pending Game Invitation </h2>
+	<table width="100%">
+		<tr><th align='left'>Dungeon Master </th>
+			<th align='left'>Invited Users </th>
+			<th align='left'> &nbsp;</th>
+		</tr>
+		<% @game.game_invitations.each do |game_invitation| %>
+		<tr>
+			<td>(me)</td>
+			<td><%= game_invitation.user_player.user_name %></td>
+			<td>Cancel</td>
+		</tr>
+		<% end %>
+	</table>
+<% end %>
+
+
+
+<br>
+<br>
+<hr>
+
+<%= link_to "Go to User Home page",user_path(current_user) %>

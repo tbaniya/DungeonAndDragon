@@ -1,0 +1,34 @@
+<% provide(:title, "Log in") %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Log In</h3>
+  </div>
+
+  <% if flash[:danger] %>
+  <div id="error_explanation">
+  <p> <%= flash[:danger] %></p>
+  </div>
+  <% end %>
+  
+  <div class = "panel-body">
+    <%= form_for(:session, url: login_path) do |f| %>
+    <div class="row">
+      <div class="col-md-2"><%= f.label :user_name,'User Name:',class: "control-label"%></div>
+      <div class="col-md-10"><%= f.text_field :user_name, class: 'form-control'%></div>
+    </div>
+    <div class='row'>
+      <div class="col-md-2"><%= f.label :password,'Password:',class: "control-label"%></div>
+      <div class="col-md-10"><%= f.password_field :password,  class: 'form-control'%></div>
+    </div>
+    <div class="row">
+      <div class="col-md-offset-2 col-md-10"><%= f.submit "Log in ", class: "btn btn-default" %></div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<hr>
+<p>
+  New user? <%= link_to "Sign up now!", root_url %>
+</p> 
+
